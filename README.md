@@ -1,6 +1,6 @@
 # Kuadrant Labels
 
-Use Kuadrant-style labels on your GitHub issues.
+Use [Kuadrant-style labels](https://github.com/Kuadrant/limitador/labels) on your GitHub issues.
 
 ## Requirements
 
