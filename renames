@@ -1,0 +1,9 @@
+bug=kind/bug
+documentation=area/doc
+duplicate=status/duplicate
+enhancement=kind/enhancement
+good first issue=participation/good first issue
+help wanted=participation/help needed
+invalid=kind/invalid
+question=kind/question
+wontfix=status/wontfix
