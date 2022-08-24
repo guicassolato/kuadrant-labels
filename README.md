@@ -22,11 +22,15 @@ Store the GitHub personal access token safely in a .env file in your file system
 echo "GITHUB_TOKEN=<my secret github token>" > .env
 ```
 
+Create the `renames` key-value file with the list of labels to update (rename). Use the equal sign (`=`) as separator.
+
+If you want, you can copy from the provided `renames.example` file:
+
+```sh
+cp renames.example renames
+```
+
 ## Usage
-
-Edit the `renames` file if needed.
-
-Then:
 
 ```sh
 ruby run.rb \
