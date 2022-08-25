@@ -53,15 +53,12 @@ source_labels = source.map do |label|
 end.to_h
 
 target_uri = URI.parse([github_endpoint, options[:target_org], options[:target_repo], 'labels'].join('/'))
-
-if options[:dry_run]
-  uri_padding = target_uri.to_s.size + source_labels.keys.map(&URI::Parser.new.method(:escape)).map(&:size).max + 2
-end
+uri_padding = target_uri.to_s.size + source_labels.keys.map(&URI::Parser.new.method(:escape)).map(&:size).max + 2
 
 source_labels.each do |label_name, label_data|
   if renames.key?(label_name)
     klass = Net::HTTP::Patch
-    uri = URI::join(target_uri, URI::Parser.new.escape(label_name))
+    uri = URI::parse(target_uri.to_s + "/" + URI::Parser.new.escape(renames[label_name]))
     data = label_data.merge(new_name: label_name)
   else
     klass = Net::HTTP::Post
@@ -76,10 +73,14 @@ source_labels.each do |label_name, label_data|
   http = Net::HTTP.new(uri.hostname, uri.port)
   http.use_ssl = true
 
+  print "#{req.method.ljust(6)} #{uri.to_s.ljust(uri_padding)} #{req.body}"
+
   if options[:dry_run]
-    puts "#{req.method.ljust(6)} #{uri.to_s.ljust(uri_padding)} #{req.body}"
+    print "\n"
     next
   end
 
   res = http.request(req)
+
+  print "  #{res.code} #{res.message}\n"
 end
